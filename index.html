@@ -1,84 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Unique Collection | Premium Luxury E-commerce</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unique Collection - Luxury Essentials</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-  <div class="header">
-    <div class="container">
-      <div class="nav-bar">
-        <div class="logo"><h1>UNIQUE COLLECTION</h1><p>LUXURY ESSENTIALS</p></div>
-        <div class="search-wrapper"><input type="text" id="searchInput" placeholder="Search premium goods..."><button id="searchBtn"><i class="fas fa-search"></i></button></div>
-        <div class="icons">
-          <button class="icon-btn" id="locationBtn"><i class="fas fa-map-marker-alt"></i></button>
-          <button class="icon-btn" id="wishlistIcon"><i class="far fa-heart"></i></button>
-          <button class="icon-btn" id="cartIconBtn"><i class="fas fa-shopping-bag"></i><span class="cart-badge" id="cartCount">0</span></button>
+    <!-- Top Nav -->
+    <nav class="top-nav">
+        <div class="container nav-bar">
+            <div class="logo">UNIQUE<span>COLLECTION</span></div>
+            <div class="search-container">
+                <select id="catSelect">
+                    <option value="all">All</option>
+                    <option value="clothes">Clothes</option>
+                    <option value="shoes">Shoes</option>
+                    <option value="watches">Watches</option>
+                    <option value="sunglasses">Sunglasses</option>
+                    <option value="accessories">Accessories</option>
+                </select>
+                <input type="text" id="searchInput" placeholder="Search premium luxury items...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="nav-right">
+                <button id="wishlistIcon" class="nav-icon"><i class="fas fa-heart"></i> <span id="wishCount">0</span></button>
+                <button id="cartIconBtn" class="nav-icon">
+                    <i class="fas fa-shopping-cart"></i> 
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <div class="account">
+                    <i class="fas fa-user"></i>
+                    <span>Account</span>
+                </div>
+            </div>
         </div>
-      </div>
+    </nav>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="dept-links">
+                <a href="#" class="dept-link active" data-cat="all">All</a>
+                <a href="#" class="dept-link" data-cat="clothes">Fashion</a>
+                <a href="#" class="dept-link" data-cat="shoes">Footwear</a>
+                <a href="#" class="dept-link" data-cat="watches">Watches</a>
+                <a href="#" class="dept-link" data-cat="sunglasses">Eyewear</a>
+                <a href="#" class="dept-link" data-cat="accessories">Accessories</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Timeless Luxury Awaits</h1>
+            <p>Handpicked premium pieces for the modern connoisseur</p>
+            <button onclick="document.getElementById('productGrid').scrollIntoView({behavior:'smooth'})" class="hero-btn">Shop Now</button>
+        </div>
+    </section>
+
+    <div class="container main-content">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Filters</h3>
+            <div class="filter-group">
+                <label>Sort By</label>
+                <select id="sortSelect">
+                    <option value="default">Featured</option>
+                    <option value="priceLow">Price: Low to High</option>
+                    <option value="priceHigh">Price: High to Low</option>
+                    <option value="rating">Top Rated</option>
+                </select>
+            </div>
+        </aside>
+
+        <!-- Products -->
+        <div class="product-section">
+            <h2>Premium Luxury Picks</h2>
+            <div class="product-grid" id="productGrid"></div>
+        </div>
     </div>
-  </div>
 
-  <div class="categories" id="categoryContainer">
-    <div class="cat-pill active" data-cat="all">ALL</div>
-    <div class="cat-pill" data-cat="clothes">CLOTHES</div>
-    <div class="cat-pill" data-cat="shoes">SHOES</div>
-    <div class="cat-pill" data-cat="watches">WATCHES</div>
-    <div class="cat-pill" data-cat="sunglasses">SUNGLASSES</div>
-    <div class="cat-pill" data-cat="accessories">ACCESSORIES</div>
-  </div>
-
-  <div class="container">
-    <div class="hero">
-      <h2>Where <span>Elegance</span> Meets <span>Excellence</span></h2>
-      <p>Luxury clothing, handcrafted shoes, Swiss watches & designer sunglasses</p>
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Your Cart</h2>
+                <button id="closeCartModal">✕</button>
+            </div>
+            <div id="cartItemsList"></div>
+            <div id="cartTotalAmount" class="cart-total"></div>
+            <button id="checkoutBtnFinal" class="checkout-btn">Proceed to Checkout</button>
+        </div>
     </div>
 
-    <div class="location-bar" id="locationBar">
-      <div class="location-info"><i class="fas fa-location-dot"></i><span id="locationText">Detect your location</span></div>
-      <button class="detect-btn" id="detectLocationBtn"><i class="fas fa-crosshairs"></i> Detect City</button>
-      <div class="delivery-estimate" id="deliveryEstimate">📍 Delivery: --</div>
+    <!-- Wishlist Modal -->
+    <div class="modal" id="wishlistModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Wishlist</h2>
+                <button id="closeWishModal">✕</button>
+            </div>
+            <div id="wishlistItemsList"></div>
+        </div>
     </div>
 
-    <div class="filter-row">
-      <select id="sortSelect" class="sort-select">
-        <option value="default">✨ Featured</option>
-        <option value="priceLow">💰 Price: Low to High</option>
-        <option value="priceHigh">💎 Price: High to Low</option>
-        <option value="rating">⭐ Top Rated</option>
-      </select>
-      <div><span id="resultCount">0</span> luxury items</div>
-    </div>
+    <!-- Toast -->
+    <div id="toastMsg" class="toast"></div>
 
-    <div id="productGrid" class="product-grid"></div>
-  </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Unique Collection • Luxury Redefined</p>
+        </div>
+    </footer>
 
-  <footer>
-    <p>UNIQUE COLLECTION — Complimentary worldwide shipping on orders $200+</p>
-    <p style="margin-top: 12px; color: var(--gold);"><i class="fab fa-instagram"></i> <i class="fab fa-facebook"></i> <i class="fab fa-x-twitter"></i></p>
-  </footer>
-
-  <div id="cartModal" class="modal">
-    <div class="modal-card">
-      <div class="modal-header"><span>🛒 Your Cart</span><button id="closeCartModal">&times;</button></div>
-      <div id="cartItemsList"></div>
-      <div style="font-weight:800; font-size:1.3rem; margin:16px 0;" id="cartTotalAmount">Total: $0.00</div>
-      <button id="checkoutBtnFinal" class="checkout-btn">💎 Secure Checkout</button>
-    </div>
-  </div>
-
-  <div id="wishlistModal" class="modal">
-    <div class="modal-card">
-      <div class="modal-header"><span>❤️ Wishlist</span><button id="closeWishModal">&times;</button></div>
-      <div id="wishlistItemsList"></div>
-    </div>
-  </div>
-
-  <div id="toastMsg" class="toast">✨ Added</div>
-  <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
